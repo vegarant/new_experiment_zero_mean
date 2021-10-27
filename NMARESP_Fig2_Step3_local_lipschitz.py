@@ -22,7 +22,7 @@ if use_gpu:
 else:
     os.environ["CUDA_VISIBLE_DEVICES"]= "-1"
 
-filename = '/hdd3/matters_arising/storage_automap_not_robust/Images_Lipschitz/test_fft_x_hcpt2wnz_LS2_poisson_notrunc_offset_v3_5_128.mat'
+filename = join(src_data,'test_fft_x_hcpt2wnz_LS2_poisson_notrunc_offset_v3_5_128.mat')
 
 data = mat73.loadmat(filename);
 mri_data = np.transpose(data['test_fft_x'])
