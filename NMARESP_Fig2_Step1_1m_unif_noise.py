@@ -56,7 +56,7 @@ gt_imgs = np.repeat(np.expand_dims(data[2,:,:],0),batch_size,axis=0)
 # sys.exit()
 
 sess = tf.compat.v1.Session()
-raw_f, _ = compile_network(sess, batch_size,fname_weights='2021-06-26_te_009/2021-06-26_te_009.h5')
+raw_f, _ = compile_network(sess, batch_size,fname_weights='2021-06-26_te_009.h5')
 
 sample_im = lambda x: sample_image(x, k_mask_idx1, k_mask_idx2)
 f  = lambda x: hand_f(raw_f, x, k_mask_idx1, k_mask_idx2)

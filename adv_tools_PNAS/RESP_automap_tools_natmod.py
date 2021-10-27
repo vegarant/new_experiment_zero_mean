@@ -179,7 +179,7 @@ def read_automap_weights(src_weights, fname_weights = 'CS_Poisson_For_Vegard.h5'
     with the weights
     """
     
-    fname_weights = '2021-06-26_te_009/2021-06-26_te_009.h5'
+    fname_weights = '2021-06-26_te_009.h5'
     
     
     print("-------------------------------")

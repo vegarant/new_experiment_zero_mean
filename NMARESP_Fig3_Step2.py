@@ -85,7 +85,7 @@ verbose=True;
 
 sess = tf.Session();
 
-raw_f, raw_df = compile_network(sess, batch_size,fname_weights='2021-06-26_te_009/2021-06-26_te_009.h5');
+raw_f, raw_df = compile_network(sess, batch_size,fname_weights='2021-06-26_te_009.h5');
 
 # f  = lambda x: hand_f( raw_f, x, k_mask_idx1, k_mask_idx2);
 f = lambda x, noise: RESP_hand_f( raw_f, x, noise, k_mask_idx1, k_mask_idx2);
