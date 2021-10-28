@@ -91,7 +91,7 @@ for ii in range(0,num_images):
 # plt.ylabel('L'r'$\phi$')
 # plt.xlabel('Samples 100 batch')
 
-np.save('NMARESP_local_ratio.npy',ratio_lc)
+np.save(join(src_data,'NMARESP_local_ratio.npy'),ratio_lc)
 
 
 
