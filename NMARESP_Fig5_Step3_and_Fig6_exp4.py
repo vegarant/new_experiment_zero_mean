@@ -1,15 +1,5 @@
 import os
 
-# use_gpu = False
-# # compute_node = 1
-# if use_gpu:
-#     # os.environ["CUDA_VISIBLE_DEVICES"]= "%d" % (compute_node)
-#     # print('Compute node: {}'.format(compute_node))
-#     os.environ["CUDA_VISIBLE_DEVICES"]= "2,3"
-# else: 
-#     os.environ["CUDA_VISIBLE_DEVICES"]= "-1"
-
-
 import numpy as np
 import h5py
 import scipy.io
@@ -64,7 +54,6 @@ def ssim_comp(ref,inp):
 HCP_nbr = 1002
 im_nbr = 0
 
-#data = scipy.io.loadmat(join(src_data, f'HCP_mgh_{HCP_nbr}_T2_subset_N_128.mat'));
 filename3 = join(src_data,'new_image.mat')
 mri_data = loadmat(filename3)['im']
 

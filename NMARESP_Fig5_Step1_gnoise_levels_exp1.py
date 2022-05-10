@@ -15,7 +15,6 @@ from adv_tools_PNAS.RESP_automap_tools_natmod import load_runner, read_automap_k
 
 from scipy.io import loadmat, savemat
 import matplotlib.pyplot as plt
-#import mat73
 import sys
 use_gpu = True
 compute_node = 1
@@ -28,34 +27,16 @@ else:
 
 k_mask_idx1, k_mask_idx2 = read_automap_k_space_mask();
 
-# filename1 = '/hdd3/matters_arising/storage_automap_not_robust/HCP_mgh_1002_T2_subset_N_128.mat'
-# filename2 = '/hdd3/matters_arising/storage_automap_not_robust/HCP_mgh_1004_T2_subset_N_128.mat'
 filename3 = join(src_data,'HCP_mgh_1033_T2_subset_N_128.mat')
 
-# data1 = loadmat(filename1)
-# data2 = loadmat(filename2)
 data = loadmat(filename3)['im']
-
-# gt_imgs = np.concatenate((data1['im'],data2['im'],data3['im']),axis=0)
-
-
-# print(data3['im'].shape)
-
-# sys.exit()
-
-# mri_data = np.transpose(data['test_fft_x'])
-
-# clean_data = mat73.loadmat(filename_x)
-# clean_mri_data = np.transpose(clean_data['test_x'])
 
 batch_size = 1;
 
 gt_imgs = np.repeat(np.expand_dims(data[2,:,:],0),batch_size,axis=0)
-# print(gt_imgs.shape)
-# sys.exit()
 
 sess = tf.compat.v1.Session()
-raw_f, _ = compile_network(sess, batch_size)
+raw_f, _ = compile_network(sess, batch_size) # Complies Augmented AUTOMAP
 
 sample_im = lambda x: sample_image(x, k_mask_idx1, k_mask_idx2)
 f  = lambda x: hand_f(raw_f, x, k_mask_idx1, k_mask_idx2)
@@ -65,13 +46,8 @@ mri_data = sample_im(gt_imgs)
 
 print(mri_data.shape)
 print(gt_imgs.shape)
-# sys.exit()
 
-# num_times = 5
 counter = 0
-
-
-
 jj = 0
 
 def rmse_comp(ref,inp):
@@ -132,9 +108,6 @@ for ii in range(0,num_times):
     
 
     output_noisy = np.squeeze(output_noisy)
-    # output_noisy = output_noisy[:,4:132,4:132]
-    
-    # output_noisy = np.rot90(np.flip(output_noisy,axis=2),axes=(1,2))
 
     output_noisy =  np.reshape(output_noisy,(batch_size,16384))
     

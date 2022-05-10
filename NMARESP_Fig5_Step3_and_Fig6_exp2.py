@@ -1,15 +1,4 @@
 import os
-
-# use_gpu = False
-# # compute_node = 1
-# if use_gpu:
-#     # os.environ["CUDA_VISIBLE_DEVICES"]= "%d" % (compute_node)
-#     # print('Compute node: {}'.format(compute_node))
-#     os.environ["CUDA_VISIBLE_DEVICES"]= "2,3"
-# else: 
-#     os.environ["CUDA_VISIBLE_DEVICES"]= "-1"
-
-
 import numpy as np
 import h5py
 import scipy.io

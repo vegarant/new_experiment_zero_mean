@@ -1,10 +1,3 @@
-"""
-This script compute a LASSO reconstruction from noisy measurements. The noise 
-added to the measurements are the random (non-zero mean) noise produced by the 
-script 'Demo_test_automap_non_zero_mean.py'.
-
-Change the variable `runner_id_automap` to produce test the knee image perturbations 
-"""
 import sys
 import time
 import tensorflow as tf
@@ -29,13 +22,11 @@ from adv_tools_PNAS.adversarial_tools import l2_norm_of_tensor
 from adv_tools_PNAS.automap_tools import read_automap_k_space_mask
 from utils import convert_automap_samples_to_tf_samples_in_image_domain
 
-
 from adv_tools_PNAS.automap_tools import load_runner, read_automap_k_space_mask, compile_network, hand_f, sample_image;
 
 
 src_noise = 'data_non_zero_mean';
 
-runner_id_automap = 5 # Change to 12, to produce the knee image perturbations
 N = 128
 wavname = 'db2'
 levels = 3
@@ -125,16 +116,6 @@ samp = np.expand_dims(samp, -1)
 
 k_mask_idx1, k_mask_idx2 = read_automap_k_space_mask();
 
-# fname_data = f'automap_rID_{runner_id_automap}_random_pert.mat'
-# data_noise = scipy.io.loadmat(join(src_noise, fname_data))
-
-# HCP_nbr = 1002
-# data = scipy.io.loadmat(join(src_data, f'HCP_mgh_{HCP_nbr}_T2_subset_N_128.mat'))
-# mri_data = data['im']
-# im_nbrs = [37, 50, 76]
-# image = np.squeeze(data['im'][im_nbrs[-1], :, :])
-# image = image.astype(np.complex128);
-
 
 sample = lambda im: sample_image(im, k_mask_idx1, k_mask_idx2)
 
@@ -151,22 +132,8 @@ with tf.compat.v1.Session() as sess:
 
     sess.run(tf.compat.v1.global_variables_initializer())
     weights = np.ones([128,128,1], dtype=sdtype);
-    # nbr_perts = len(data_noise.keys())-3
-
-    # for im_nbr in im_nbrs:
-    #     image = np.squeeze(mri_data[im_nbr, :, :])
-    #     image = image.astype(np.complex128);
-    #     image = np.expand_dims(image, -1)
-
-        # for i in range(nbr_perts):
 
     for im_number in range(0,noisy_input_array.shape[0],1):
-
-        # e_random = data_noise[f"e{i}"];
-
-        # print(e_random.shape)
-        
-        # noisy_ksp = e_random+sample(np.expand_dims(image[:,:,0],0))
         
         print('image number:',im_number)
 
@@ -176,7 +143,6 @@ with tf.compat.v1.Session() as sess:
                                                                         k_mask_idx1,
                                                                         k_mask_idx2)
         
-        # _image = image + noise
         for n_iter_ind in range(len(n_iter_vec)):
 
             n_iter = n_iter_vec[n_iter_ind]
@@ -189,25 +155,10 @@ with tf.compat.v1.Session() as sess:
                                                     'image:0': noisy_image,
                                                     'sampling_pattern:0': samp})
             rec = np.abs(_rec[:,:,0]).astype(np.float64);
-        # rec[rec > 1] = 1;
 
             LASSO_gnoise_recons[im_number,n_iter_ind,:,:] = rec
 
-    # np.save(join(src_data,'lasso_gnoise_recons.npy'),LASSO_gnoise_recons)
     np.save(join(src_data,'NMARESP_lasso_gnoise_recons_row3.npy'),LASSO_gnoise_recons)
-
-
-
-            # fname = f'lfi_im_rec_lasso_rID_{runner_id_automap}_HCP_{HCP_nbr}_im_nbr_{im_nbr}_pert_nbr_{i}.png';
-            # pil_im = Image.fromarray(np.uint8(255*rec));
-            # pil_im.save(join(dest_plots, fname))
-
-
-
-
-
-
-
 
 
 
